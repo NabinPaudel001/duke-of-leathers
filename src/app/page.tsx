@@ -3,6 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+import Contact from "@/components/ui/Contact";
 
 export default function ProductPage() {
   const products = [
@@ -146,13 +147,20 @@ export default function ProductPage() {
 {/* ABOUT / HERO SECTION */}
 <section className="relative flex flex-col items-center text-center max-w-6xl mx-auto space-y-10 pt-10 pb-24 px-6 z-10">
   {/* HEADING */}
-  <h1 className="text-5xl font-extrabold tracking-widest mb-6 text-amber-100">
-    DUKE OF LEATHER
+  <h1 className="width-full font-extrabold tracking-widest mb-0 text-amber-100">
+    <Image
+      src="/duke-logo.svg"
+      alt="Bull logo"
+      width={280}
+      height={72}
+      className="object-contain mt-2"
+      priority
+    />
   </h1>
 
   <div className="flex flex-col items-center mb-5">
-    <div className="w-20 h-20 border-2 border-white rounded-full flex items-center justify-center">
-      <span className="text-3xl text-white">D</span>
+    <div className="w-20 h-20  flex items-center justify-center ">
+      <Image src={"/logo.svg"} alt="Bull logo" width={75} height={70} className="object-contain mt-2" />
     </div>
     <div className="w-px h-10 bg-white mt-2"></div>
   </div>
@@ -299,12 +307,19 @@ export default function ProductPage() {
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
                   {product.name}
                 </h2>
-                <a id="#contact" href="#contact" className="text-2xl font-semibold text-red-700">
-                  {product.price}
-                </a>
                 <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
                   {product.description}
                 </p>
+                <button
+  onClick={() =>
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+  }
+  className="self-start w-fit bg-red-700 text-white font-semibold px-6 py-3 rounded-xl hover:bg-red-800 transition disabled:opacity-60"
+>
+  {product.price}
+</button>
+
+
                 {/* <div className="grid grid-cols-2 gap-6 text-sm text-gray-600">
                   {product.details.map((d, i) => (
                     <div key={i}>
@@ -317,39 +332,7 @@ export default function ProductPage() {
             </div>
           );
         })}
-
-        {/* CONTACT FORM */}
-        <section id="contact" className="max-w-4xl mx-auto mb-0">
-          <div className="mx-4 bg-white p-10 rounded-3xl shadow-lg border border-gray-200">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Contact Us</h2>
-          <p className="text-gray-600 mb-6">
-            Have a question or want to work with us? Send us a message below.
-          </p>
-          <form className="grid grid-cols-1 gap-6">
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-600"
-            />
-            <input
-              type="email"
-              placeholder="Your Email"
-              className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-600"
-            />
-            <textarea
-              placeholder="Your Message"
-              rows={6}
-              className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-600"
-            />
-            <button
-              type="submit"
-              className="w-full bg-red-700 text-white font-semibold py-4 rounded-xl hover:bg-red-800 transition"
-            >
-              Send Message
-            </button>
-          </form>
-          </div>
-        </section>
+        <Contact/>
       </div>
 
       {/* FOOTER */}
@@ -357,8 +340,15 @@ export default function ProductPage() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
           {/* Left side */}
           <div>
-            <h1 className="text-3xl font-extrabold tracking-wider mb-4 text-amber-100">
-              DUKE OF LEATHER
+            <h1 className="width-full font-extrabold tracking-wider mb-4 text-amber-100">
+             <Image
+      src="/duke-logo.svg"
+      alt="Bull logo"
+      width={280}
+      height={72}
+      className="object-contain mt-2"
+      priority
+    />
             </h1>
             <p className="text-sm mt-2">
               &copy; {new Date().getFullYear()} Duke of Leather. All rights
