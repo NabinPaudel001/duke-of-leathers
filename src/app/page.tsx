@@ -2,8 +2,9 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaGoogle, FaInstagram, FaLinkedin, FaMailBulk, FaTiktok } from "react-icons/fa";
 import Contact from "@/components/ui/Contact";
+import { FaMessage } from "react-icons/fa6";
 
 export default function ProductPage() {
   const products = [
@@ -335,48 +336,66 @@ export default function ProductPage() {
         <Contact/>
       </div>
 
-      {/* FOOTER */}
-      <footer className="bg-black text-white  py-10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
-          {/* Left side */}
-          <div>
-            <h1 className="width-full font-extrabold tracking-wider mb-4 text-amber-100">
-             <Image
-      src="/duke-logo.svg"
-      alt="Bull logo"
-      width={280}
-      height={72}
-      className="object-contain mt-2"
-      priority
-    />
-            </h1>
-            <p className="text-sm mt-2">
-              &copy; {new Date().getFullYear()} Duke of Leather. All rights
-              reserved.
-            </p>
-          </div>
+    {/* FOOTER */}
+<footer className="bg-black text-white py-10">
+  <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-center gap-10 text-center md:text-left">
+    {/* Left side */}
+    <div className="flex flex-col items-center md:items-start">
+      <h1 className="w-full font-extrabold tracking-wider mb-4 text-amber-100">
+        <Image
+          src="/duke-logo.svg"
+          alt="Bull logo"
+          width={280}
+          height={72}
+          className="object-contain mt-2"
+          priority
+        />
+      </h1>
+      <p className="text-sm mt-2">
+        &copy; {new Date().getFullYear()} Duke of Leather. All rights reserved.
+      </p>
+    </div>
 
-          {/* Right side */}
-          <div className="flex flex-col items-start md:items-end gap-4">
-            <div className="text-sm">
-              <p>Email: info@dukeofleather.com</p>
-              <p>Phone: +977-9800000000</p>
-              <p>Address: Kathmandu, Nepal</p>
-            </div>
-            <div className="flex gap-4 mt-2 self-center">
-              <a href="#" className="hover:text-amber-400 transition">
-                <FaFacebook size={20} />
-              </a>
-              <a href="#" className="hover:text-amber-400 transition">
-                <FaInstagram size={20} />
-              </a>
-              <a href="#" className="hover:text-amber-400 transition">
-                <FaLinkedin size={20} />
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+    {/* Right side */}
+    <div className="flex flex-col items-center md:items-end gap-4">
+      <div className="text-sm text-center md:text-left">
+        <p>
+          Email:{" "}
+          <a href="mailto:leathers.duke@gmail.com">leathers.duke@gmail.com</a>
+        </p>
+        <p>
+          Phone: <a href="tel:+47-45423709">+47 45423709</a>
+        </p>
+        <p>
+          Address: Fredrik Borgens veg 31,<br />
+          <span className="ml-[64px] md:ml-[64px] ml-0">2040 Kløfta Norway</span>
+        </p>
+      </div>
+
+      <div className="flex gap-4 mt-2 justify-center md:self-center">
+        <a
+          href="https://www.facebook.com/share/1CiUKWfDH9/"
+          className="hover:text-amber-400 transition"
+        >
+          <FaFacebook size={20} />
+        </a>
+        <a
+          href="https://www.instagram.com/dukeofleathers"
+          className="hover:text-amber-400 transition"
+        >
+          <FaInstagram size={20} />
+        </a>
+        <a
+          href="https://www.tiktok.com/@duke.of.leathers?_t=ZN-90O6D1gyAKs&_r=1"
+          className="hover:text-amber-400 transition"
+        >
+          <FaTiktok size={20} />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
 
       {/* LIGHTBOX */}
       {isLightboxOpen && (
