@@ -1,7 +1,7 @@
 // app/context/CheckoutContext.tsx
 "use client";
 
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useCart } from "./CartContext"; // Import useCart to get tokens
 import axios from "axios";
 
@@ -54,7 +54,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
   const { nonce: cartNonce, cartToken: cartCartToken, cartHash: cartCartHash, loading: cartLoading } = useCart();
 
   // Function to fetch checkout configuration (call this when needed, maybe before order creation)
-  const fetchCheckoutConfig = useCallback(async () => {
+  const fetchCheckoutConfig = async () => {
     if (!cartNonce || !cartCartToken) {
         console.warn("Tokens not available, skipping checkout config fetch.");
         return null; // Return null or default config if tokens are missing
@@ -69,7 +69,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
         },
       });
 
-      const data: CheckoutData = res.data;
+      const  CheckoutData = res.data;
       setCheckout(data);
       return data; // Return the fetched config
     } catch (err: any) {
@@ -78,7 +78,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
       // For now, we'll just log and return null, allowing the order creation to proceed
       return null;
     }
-  }, [cartNonce, cartCartToken]);
+  };
 
   const createOrder = async (orderData: any) => {
     try {
@@ -121,7 +121,7 @@ export const CheckoutProvider = ({ children }: { children: React.ReactNode }) =>
       console.warn("Cart loaded but tokens are missing.");
       setLoading(false);
     }
-  }, [fetchCheckoutConfig, cartLoading]); // Only run when these values change
+  }, [cartNonce, cartCartToken, cartLoading]); // Only run when these values change
 
 
   // Provide tokens from CartContext and the createOrder function

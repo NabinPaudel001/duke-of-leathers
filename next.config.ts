@@ -16,7 +16,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'http://leather.local', // Your WordPress domain
+            value: 'https://leather.ct.ws/', // Your WordPress domain
           },
           {
             key: 'Access-Control-Allow-Credentials',
@@ -40,7 +40,7 @@ const nextConfig = {
     return [
       {
         source: '/wp-json/:path*',
-        destination: 'http://leather.local/wp-json/:path*', // Your WordPress API
+        destination: 'https://leather.ct.ws/wp-json/:path*', // Your WordPress API
       },
     ];
   },
