@@ -17,7 +17,7 @@ interface Product {
 export default function ProductDetailPage() {
   const { id } = useParams();
   const router = useRouter();
-  const { addItem } = useCart(); // 🔥 FIXED (was addToCart)
+  const { addToCart } = useCart();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
@@ -115,7 +115,7 @@ export default function ProductDetailPage() {
 
             {/* 🛒 Add to Cart Button */}
             <button
-              onClick={() => addItem(Number(id), 1)}
+              onClick={() => addToCart(Number(id), 1)}
               className="bg-red-700 text-white px-8 py-3 rounded-2xl hover:bg-red-800 transition w-fit"
             >
               🛒 Add to Cart

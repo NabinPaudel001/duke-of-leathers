@@ -6,28 +6,7 @@ import { useCart } from "@/app/context/CartContext";
 import Link from "next/link";
 
 // Types
-interface CartItem {
-  key: string;
-  id: number;
-  name: string;
-  quantity: number;
-  prices: { price: string };
-  images: { src: string }[];
-}
 
-interface CartTotals {
-  total_items: string;
-  total_price: string;
-  total_tax: string;
-  total_shipping: string;
-}
-
-interface CartData {
-  items: CartItem[];
-  totals: CartTotals;
-  shippingRates: any[];
-  needsShipping: boolean;
-}
 
 interface CheckoutFormData {
   email: string;
@@ -90,8 +69,6 @@ export default function CheckoutPage() {
   
   const [errors, setErrors] = useState<Partial<Record<keyof CheckoutFormData, string>>>({});
   const [submitting, setSubmitting] = useState(false);
-  const [shippingRates, setShippingRates] = useState<any[]>([]);
-  const [selectedShippingRate, setSelectedShippingRate] = useState<string>("");
   const [showOrderNotes, setShowOrderNotes] = useState(false);
 
   const items = cart?.items || [];
@@ -115,6 +92,8 @@ export default function CheckoutPage() {
         
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
+        // Use the fetched checkout config (logged for now; replace with state update when needed)
+        console.debug("Checkout config:", data);
       } catch (err) {
         console.error("Failed to fetch checkout config:", err);
       }
@@ -279,7 +258,9 @@ export default function CheckoutPage() {
               {/* Country/Region */}
               <div className="mb-4">
                 <select
+                  id="billing_country"
                   name="billing_country"
+                  aria-label="Billing country"
                   value={formData.billing_country}
                   onChange={handleInputChange}
                   className={`w-full border rounded-md px-3 py-2 ${errors.billing_country ? 'border-red-500' : ''}`}
@@ -398,6 +379,7 @@ export default function CheckoutPage() {
                 <div className="mb-4">
                   <select
                     name="shipping_country"
+                    aria-label="Shipping country"
                     value={formData.shipping_country}
                     onChange={handleInputChange}
                     className={`w-full border rounded-md px-3 py-2 ${errors.shipping_country ? 'border-red-500' : ''}`}

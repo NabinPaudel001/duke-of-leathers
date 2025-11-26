@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const router = useRouter();
-  const { cart, loading, removeFromCart, updateQuantity, refreshCart } = useCart();
+  const { cart, loading, removeFromCart, updateQuantity } = useCart();
 
   const items = cart?.items || [];
   const totalItems = items.reduce((sum, item) => sum + (item?.quantity || 0), 0);
@@ -81,7 +81,11 @@ export default function CartPage() {
                 <p className="text-red-700 font-bold">${Number(item?.prices.price) / 100}</p>
 
                 <div className="flex items-center mt-2 gap-3">
+                  <label htmlFor={`quantity-${item.key}`} className="sr-only">
+                    Quantity for {item.name}
+                  </label>
                   <input
+                    id={`quantity-${item.key}`}
                     type="number"
                     min={1}
                     value={item.quantity}
@@ -89,6 +93,9 @@ export default function CartPage() {
                       updateQuantity(item.key, Number(e.target.value))
                     }
                     className="w-20 border rounded-md px-2 py-1"
+                    title={`Quantity for ${item.name}`}
+                    aria-label={`Quantity for ${item.name}`}
+                    placeholder="1"
                   />
 
                   <button
