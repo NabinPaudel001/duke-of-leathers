@@ -186,12 +186,21 @@ async function handleAddToCart() {
 
             {/* Quantity Selector */}
             <div className="mb-4 flex items-center gap-3">
-              <span>Quantity:</span>
+              <label htmlFor="quantity" className="text-sm font-medium">
+                Quantity:
+              </label>
               <input
+                id="quantity"
                 type="number"
                 min={1}
                 value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
+                onChange={(e) => {
+                  const newQty = parseInt(e.target.value, 10);
+                  if (newQty > 0) setQuantity(newQty);
+                }}
+                placeholder="1"
+                title="Quantity"
+                aria-label="Quantity"
                 className="w-20 border rounded-md px-2 py-1"
               />
             </div>

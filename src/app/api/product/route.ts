@@ -1,27 +1,37 @@
-import axios from "axios";
-import https from "https";
-
 export async function GET() {
   try {
-    const response = await axios.get("https://leather.ct.ws/wp-json/wc/v3/products", {
-      auth: {
-        username: process.env.CONSUMER_KEY!,
-        password: process.env.CONSUMER_SECRET!,
+    const url = "https://leather.ct.ws/wp-json/wc/v3/products";
+
+    const authString =
+      Buffer.from(
+        `${process.env.consumer_key}:${process.env.consumer_secret}`
+      ).toString("base64");
+
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Basic ${authString}`,
+        "Content-Type": "application/json",
       },
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false, // <- allow self-signed cert
-      }),
+      // important for vercel
+      cache: "no-store",
     });
 
-    return new Response(JSON.stringify(response.data), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (err: any) {
-    console.error("Error fetching products:", err.message);
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    if (!response.ok) {
+      const error = await response.text();
+      return Response.json(
+        { error: "WooCommerce API error", details: error },
+        { status: response.status }
+      );
+    }
+
+    const data = await response.json();
+
+    return Response.json(data, { status: 200 });
+  } catch (error: any) {
+    console.error("Error fetching products:", error);
+    return Response.json(
+      { error: error.message || "Internal server error" },
+      { status: 500 }
+    );
   }
 }
