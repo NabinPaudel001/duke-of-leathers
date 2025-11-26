@@ -1,106 +1,102 @@
-// app/api/checkout/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
-const WOOCOMMERCE_BASE = "https://leather.ct.ws/";
-const WC_CHECKOUT_PATH = "/wp-json/wc/store/v1/checkout";
-const WC_CART_PATH = "/wp-json/wc/store/v1/cart";
+const BASE = "https://leather.ct.ws";
+const CHECKOUT = "/wp-json/wc/store/v1/checkout";
+const CART = "/wp-json/wc/store/v1/cart";
 
-async function proxyFetch(path: string, options: RequestInit = {}) {
-  const url = `${WOOCOMMERCE_BASE}${path}`;
-  return fetch(url, {
-    ...options,
+// Generic fetch wrapper
+async function wcFetch(path: string, init: RequestInit = {}) {
+  return fetch(`${BASE}${path}`, {
+    ...init,
     headers: {
-      ...(options.headers || {}),
-      "Accept": "application/json",
+      Accept: "application/json",
+      ...(init.headers || {}),
     },
+    cache: "no-store",
   });
+}
+
+function extractToken(headers: Headers, key: string) {
+  return (
+    headers.get(key) ||
+    headers.get(key.toLowerCase()) ||
+    headers.get(key.toUpperCase()) ||
+    ""
+  );
 }
 
 export async function GET(req: NextRequest) {
   try {
-    const incomingCookies = req.headers.get("cookie") ?? "";
-    console.log("=== GET /api/checkout ===");
+    const cookies = req.headers.get("cookie") ?? "";
 
-    const wcRes = await proxyFetch(WC_CHECKOUT_PATH, {
+    const wcRes = await wcFetch(CHECKOUT, {
       method: "GET",
-      headers: { Cookie: incomingCookies, Accept: "application/json" },
+      headers: { Cookie: cookies },
     });
 
-    console.log("WooCommerce GET checkout status:", wcRes.status);
-    console.log("WooCommerce GET checkout headers:", Object.fromEntries(wcRes.headers.entries()));
-
+    // Parse JSON safely
     const text = await wcRes.text();
     const data = text ? JSON.parse(text) : {};
 
-    const headers: Record<string, string> = { "Content-Type": "application/json" };
-    
-    // Forward ALL relevant headers with proper casing
+    // Extract headers WooCommerce sends
+    const outgoing: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+
     const setCookie = wcRes.headers.get("set-cookie");
-    const cartToken = wcRes.headers.get("cart-token") || wcRes.headers.get("Cart-Token");
-    const nonce = wcRes.headers.get("nonce") || wcRes.headers.get("Nonce");
-    const cartHash = wcRes.headers.get("cart-hash") || wcRes.headers.get("Cart-Hash");
+    if (setCookie) outgoing["Set-Cookie"] = setCookie;
 
-    if (setCookie) headers["Set-Cookie"] = setCookie;
-    if (cartToken) headers["cart-token"] = cartToken;
-    if (nonce) headers["nonce"] = nonce;
-    if (cartHash) headers["cart-hash"] = cartHash;
+    const cartToken = extractToken(wcRes.headers, "cart-token");
+    const nonce = extractToken(wcRes.headers, "nonce");
+    const cartHash = extractToken(wcRes.headers, "cart-hash");
 
-    return new NextResponse(JSON.stringify(data), { status: wcRes.status, headers });
+    if (cartToken) outgoing["cart-token"] = cartToken;
+    if (nonce) outgoing["nonce"] = nonce;
+    if (cartHash) outgoing["cart-hash"] = cartHash;
+
+    return new NextResponse(JSON.stringify(data), {
+      status: wcRes.status,
+      headers: outgoing,
+    });
+
   } catch (err) {
-    console.error("GET /api/checkout failed:", err);
-    return NextResponse.json({ error: "Failed to fetch checkout" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch checkout" },
+      { status: 500 }
+    );
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const incomingCookies = req.headers.get("cookie") ?? "";
+    const cookies = req.headers.get("cookie") ?? "";
     const body = await req.json();
-    console.log("=== POST /api/checkout ===");
 
-    // Get tokens from request headers (case-insensitive)
-    const clientNonce = 
-      req.headers.get("x-wc-store-api-nonce") || 
-      req.headers.get("nonce") || 
-      req.headers.get("Nonce") || "";
-    
-    const clientCartToken = 
-      req.headers.get("cart-token") || 
-      req.headers.get("Cart-Token") || "";
+    // First try to read tokens from client request (best case)
+    let nonce = extractToken(req.headers, "x-wc-store-api-nonce") ||
+                extractToken(req.headers, "nonce");
 
-    console.log("Client tokens:", { nonce: !!clientNonce, cartToken: !!clientCartToken });
+    let cartToken = extractToken(req.headers, "cart-token");
 
-    if (!clientNonce || !clientCartToken) {
-      console.warn("⚠️ Missing tokens, fetching from cart...");
-      const cartRes = await proxyFetch(WC_CART_PATH, {
+    // If missing → fetch cart to get fresh tokens
+    if (!nonce || !cartToken) {
+      const cartRes = await wcFetch(CART, {
         method: "GET",
-        headers: { Cookie: incomingCookies, Accept: "application/json" },
+        headers: { Cookie: cookies },
       });
 
-      const cartNonce = 
-        cartRes.headers.get("nonce") || 
-        cartRes.headers.get("Nonce") || "";
-      
-      const cartCartToken = 
-        cartRes.headers.get("cart-token") || 
-        cartRes.headers.get("Cart-Token") || "";
+      nonce = extractToken(cartRes.headers, "nonce");
+      cartToken = extractToken(cartRes.headers, "cart-token");
 
-      if (!cartNonce || !cartCartToken) {
-        console.error("❌ No tokens available from cart");
-        return NextResponse.json({ error: "Missing authentication tokens" }, { status: 401 });
+      if (!nonce || !cartToken) {
+        return NextResponse.json(
+          { error: "Missing authentication tokens" },
+          { status: 401 }
+        );
       }
-
-      // Use cart tokens
-    //   const nonce = cartNonce;
-    //   const cartToken = cartCartToken;
-    } else {
-    //   nonce = clientNonce;
-    //   cartToken = clientCartToken;
     }
 
-    console.log("Using tokens for order creation");
-
-    // Build order data in WooCommerce format
+    // Prepare WooCommerce checkout data
     const orderData = {
       billing_address: body.billing_address,
       shipping_address: body.shipping_address,
@@ -111,39 +107,42 @@ export async function POST(req: NextRequest) {
       extensions: {},
     };
 
-    const wcRes = await proxyFetch(WC_CHECKOUT_PATH, {
+    const wcRes = await wcFetch(CHECKOUT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Cookie: incomingCookies,
-        Accept: "application/json",
-        "nonce": clientNonce,
-        "Cart-Token": clientCartToken,
+        Cookie: cookies,
+        "nonce": nonce,
+        "cart-token": cartToken,
       },
       body: JSON.stringify(orderData),
     });
 
-    console.log("WooCommerce POST checkout status:", wcRes.status);
-    console.log("WooCommerce POST checkout headers:", Object.fromEntries(wcRes.headers.entries()));
+    const responseText = await wcRes.text();
+    const responseData = responseText ? JSON.parse(responseText) : {};
 
-    const text = await wcRes.text();
-    const data = text ? JSON.parse(text) : {};
+    const outgoing: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
 
-    const headers: Record<string, string> = { "Content-Type": "application/json" };
-    const setCookie = wcRes.headers.get("set-cookie");
-    const newCartToken = wcRes.headers.get("cart-token") || wcRes.headers.get("Cart-Token");
-    const newNonce = wcRes.headers.get("nonce") || wcRes.headers.get("Nonce");
+    const newSetCookie = wcRes.headers.get("set-cookie");
+    if (newSetCookie) outgoing["Set-Cookie"] = newSetCookie;
 
-    if (setCookie) headers["Set-Cookie"] = setCookie;
-    if (newCartToken) headers["cart-token"] = newCartToken;
-    if (newNonce) headers["nonce"] = newNonce;
+    const newNonce = extractToken(wcRes.headers, "nonce");
+    const newCartToken = extractToken(wcRes.headers, "cart-token");
 
-    return new NextResponse(JSON.stringify(data), { status: wcRes.status, headers });
-  } catch (err) {
-    console.error("POST /api/checkout failed:", err);
-    return NextResponse.json({ 
-      error: "Failed to create order",
-      details: err instanceof Error ? err.message : "Unknown error"
-    }, { status: 500 });
+    if (newNonce) outgoing["nonce"] = newNonce;
+    if (newCartToken) outgoing["cart-token"] = newCartToken;
+
+    return new NextResponse(JSON.stringify(responseData), {
+      status: wcRes.status,
+      headers: outgoing,
+    });
+
+  } catch (err: any) {
+    return NextResponse.json(
+      { error: "Failed to create order", details: err.message },
+      { status: 500 }
+    );
   }
 }
