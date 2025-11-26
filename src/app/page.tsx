@@ -1,17 +1,19 @@
 "use client";
+import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { FaFacebook, FaGoogle, FaInstagram, FaLinkedin, FaMailBulk, FaTiktok } from "react-icons/fa";
 import Contact from "@/components/ui/Contact";
 import { FaMessage } from "react-icons/fa6";
+import ProductsList from "@/components/ui/ProductsList";
 
 export default function ProductPage() {
   const products = [
     {
       id: 1,
       name: "Mustang Rolled Leather Bag",
-      price: "Contact For Price",
+      price: "More Details",
       images: [
         "/images/mustang-rolled.jpg",
         // "/images/duffle-1.jpg",
@@ -30,7 +32,7 @@ export default function ProductPage() {
     {
       id: 2,
       name: "Viking Style Backpack",
-      price: "Contact For Price",
+      price: "More Details",
       images: ["/images/viking-style.jpg", "/images/hikers.jpg"],
       description:
         "This vintage inspired piece blends with minimal Scandinavian elegance with practical utility and, each pattern reflects the simplicity of Norwegian craftsmanship.",
@@ -44,7 +46,7 @@ export default function ProductPage() {
     {
       id: 3,
       name: "Subhya Travel Bag",
-      price: "Contact For Price",
+      price: "More Details",
       images: ["/images/Subhya-bag.jpg", "/images/unisex.jpg"],
       description:
         "Whether you're heading for a relax weekend getaway or a business trip, the Subhya travel bag is the perfect travel companion. With spacious capacity and a vivid exterior, it gives you both functionality and elegance when you're on the move.",
@@ -58,7 +60,7 @@ export default function ProductPage() {
     {
       id: 4,
       name: "Chelsea Women's Classic Bag",
-      price: "Contact For Price",
+      price: "More Details",
       images: ["/images/chelsa.jpg", "/images/chelsa-1.jpg", "/images/chelsa-2.jpg", "/images/chelsa-3.jpg"],
       description:
         "This classic women's leather bag design reflect the combination of timeless style and subtle details.",
@@ -72,7 +74,7 @@ export default function ProductPage() {
     {
       id: 5,
       name: "Men's Classic Office Bag",
-      price: "Contact For Price",
+      price: "More Details",
       images: ["/images/mens-classic.jpg", "/images/mens-classic-1.jpg", "/images/mens-classic-2.jpg", "/images/mens-classic-3.jpg", "/images/mens-classic-4.jpg"],
       description:
         "The vintage leather offers the quality and spacious capacity, it reflects the highland elegance and simplicity of Nordic style.",
@@ -86,7 +88,7 @@ export default function ProductPage() {
      {
       id: 6,
       name: "Henry Leather Vintage",
-      price: "Contact For Price",
+      price: "More Details",
       images: ["/images/vintage.jpg", "/images/vintage-1.jpg", "/images/vintage-2.jpg", "/images/vintage-3.jpg", "/images/vintage-4.jpg"],
       description:
         "This vintage leather bag selection brings the best in real gems handmade pieces from our unique collection.",
@@ -146,7 +148,7 @@ export default function ProductPage() {
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
 {/* ABOUT / HERO SECTION */}
-<section className="relative flex flex-col items-center text-center max-w-6xl mx-auto space-y-10 pt-10 pb-24 px-6 z-10">
+<section className="relative flex flex-col items-center text-center max-w-6xl mx-auto space-y-10 pt-10 pb-24 px-6 z-10 mb-10">
   {/* HEADING */}
   <h1 className="width-full font-extrabold tracking-widest mb-0 text-amber-100">
     <Image
@@ -178,7 +180,69 @@ export default function ProductPage() {
   </p>
 
   {/* GRID SECTION */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-5 place-items-stretch">
+  
+<div className="w-full border-t border-white mt-10 mb-0"></div>
+
+</section>
+
+      {/* PRODUCT SECTIONS */}
+      <div className="relative z-10 py-24 bg-white">
+          
+              <ProductsList />
+  
+        {/* WHY CHOOSE SECTION */}
+<section className="relative z-10 bg-black/60 py-20 px-6 mb-15">
+  
+  <div className="max-w-3xl mx-auto text-center mb-10">
+    <div className="absolute inset-0 -z-10">
+            <Image
+              src="/images/s.webp"
+              alt="Background"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-black/40" />
+          </div>
+    <h3 className="text-2xl font-semibold text-white mb-6">
+      Why Choose Our Leather Bags
+    </h3>
+
+    {/* Subtle list display */}
+    <ul className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-gray-300 text-sm tracking-wide">
+      <li className="border border-white/10 rounded-xl p-5 bg-white/5 hover:bg-white/10 transition-all duration-300">
+        <span className="block text-amber-200 font-semibold mb-2">
+          Craftsmanship
+        </span>
+        Each bag is handcrafted from the finest materials, ensuring durability and longevity.
+      </li>
+      <li className="border border-white/10 rounded-xl p-5 bg-white/5 hover:bg-white/10 transition-all duration-300">
+        <span className="block text-amber-200 font-semibold mb-2">
+          Style & Functionality
+        </span>
+        Designed to meet your unique lifestyle needs, without compromising on aesthetics.
+      </li>
+      <li className="border border-white/10 rounded-xl p-5 bg-white/5 hover:bg-white/10 transition-all duration-300">
+        <span className="block text-amber-200 font-semibold mb-2">
+          Sustainability
+        </span>
+        We prioritize eco-friendly practices in our production process, crafting bags you can feel good about.
+      </li>
+    </ul>
+
+    <p className="text-gray-300 mt-10 text-sm leading-relaxed max-w-2xl mx-auto">
+      Elevate your everyday experience with our versatile leather bags tailored for the discerning Norwegian.
+      Explore our collection today and find your perfect companion for work, play, and everything in between.{" "}
+      <span className="font-semibold text-amber-200">
+        Your adventure begins here.
+      </span>
+    </p>
+  </div>
+  <h3 className="text-2xl text-center font-semibold text-white mb-6">
+      Wide Range of Styles for Every Lifestyle
+    </h3>
+
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-5 place-items-stretch">
     {/* Office Worker */}
     <div className="border border-white/40 rounded-2xl p-6 text-center bg-white/5 hover:bg-white/10 transition-all duration-300">
       <h3 className="text-xl font-semibold text-amber-200 mb-3">
@@ -226,113 +290,7 @@ export default function ProductPage() {
       </p>
     </div>
   </div>
-
-  {/* WHY CHOOSE SECTION */}
-  <div className="w-full border-t border-white mt-10 mb-8"></div>
-
-  <div className="max-w-3xl mx-auto text-center -mb-10">
-    <h3 className="text-2xl font-semibold text-white mb-6">
-      Why Choose Our Leather Bags
-    </h3>
-
-    {/* Subtle list display */}
-    <ul className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-gray-300 text-sm tracking-wide">
-      <li className="border border-white/10 rounded-xl p-5 bg-white/5 hover:bg-white/10 transition-all duration-300">
-        <span className="block text-amber-200 font-semibold mb-2">
-          Craftsmanship
-        </span>
-        Each bag is handcrafted from the finest materials, ensuring durability and longevity.
-      </li>
-      <li className="border border-white/10 rounded-xl p-5 bg-white/5 hover:bg-white/10 transition-all duration-300">
-        <span className="block text-amber-200 font-semibold mb-2">
-          Style & Functionality
-        </span>
-       Designed to meet your unique lifestyle needs, without compromising on aesthetics.
-      </li>
-      <li className="border border-white/10 rounded-xl p-5 bg-white/5 hover:bg-white/10 transition-all duration-300">
-        <span className="block text-amber-200 font-semibold mb-2">
-          Sustainability
-        </span>
-       We prioritize eco-friendly practices in our production process, crafting bags you can feel good about.
-      </li>
-    </ul>
-
-    <p className="text-gray-300 mt-10 text-sm leading-relaxed max-w-2xl mx-auto">
-      Elevate your everyday experience with our versatile leather bags tailored for the discerning Norwegian. Explore our collection today and find your perfect companion for work, play, and everything in between.{" "}
-      <span className="font-semibold text-amber-200">
-        Your adventure begins here.
-      </span>
-    </p>
-  </div>
-</section>
-
-      {/* PRODUCT SECTIONS */}
-      <div className="relative z-10 py-24 bg-white">
-        {products.map((product, index) => {
-          const imageOrder = index % 2 === 0 ? "lg:order-1" : "lg:order-2";
-          const textOrder = index % 2 === 0 ? "lg:order-2" : "lg:order-1";
-
-          return (
-            <div
-              key={product.id}
-              className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24"
-            >
-              {/* Product Image */}
-              <div className={` mx-4 flex flex-col items-center ${imageOrder}`}>
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 160 }}
-                  className="relative w-full max-w-[480px] aspect-square bg-white rounded-3xl shadow-xl border border-gray-200 p-6 cursor-pointer flex items-center justify-center"
-                  onClick={() => openLightbox(index, 0)}
-                >
-                  <div className="w-full h-full flex items-center justify-center p-6 bg-gray-50 rounded-xl overflow-hidden">
-                    <Image
-                      src={product.images[0]}
-                      alt={product.name}
-                      width={400}
-                      height={400}
-                      className="object-contain"
-                    />
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* Product Details */}
-              <motion.div
-                initial={{ opacity: 0, x: index % 2 === 0 ? 40 : -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className={`flex flex-col gap-6 p-8 ${textOrder}`}
-              >
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                  {product.name}
-                </h2>
-                <p className="text-gray-700 text-base lg:text-lg leading-relaxed">
-                  {product.description}
-                </p>
-                <button
-  onClick={() =>
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
-  }
-  className="self-start w-fit bg-red-700 text-white font-semibold px-6 py-3 rounded-xl hover:bg-red-800 transition disabled:opacity-60"
->
-  {product.price}
-</button>
-
-
-                {/* <div className="grid grid-cols-2 gap-6 text-sm text-gray-600">
-                  {product.details.map((d, i) => (
-                    <div key={i}>
-                      <p className="font-bold text-gray-900">{d.label}</p>
-                      <p>{d.value}</p>
-                    </div>
-                  ))}
-                </div> */}
-              </motion.div>
-            </div>
-          );
-        })}
+  </section>
         <Contact/>
       </div>
 
@@ -340,17 +298,34 @@ export default function ProductPage() {
 <footer className="bg-black text-white py-10">
   <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-center gap-10 text-center md:text-left">
     {/* Left side */}
-    <div className="flex flex-col items-center md:items-start">
-      <h1 className="w-full font-extrabold tracking-wider mb-4 text-amber-100">
-        <Image
-          src="/duke-logo.svg"
-          alt="Bull logo"
-          width={280}
-          height={72}
-          className="object-contain mt-2"
-          priority
-        />
-      </h1>
+   <div className="flex flex-col items-center md:items-start">
+  <div className="flex items-center mb-4 gap-0">
+    {/* Circular Image */}
+    <div className="rounded-full overflow-hidden">
+      <Image
+        src="/logo.svg"
+        alt="Bull logo"
+        width={60}
+        height={64}
+        className="object-cover w-full h-full block"
+        priority
+      />
+    </div>
+
+    {/* Rectangular Image */}
+    <div className="">
+      <Image
+        src="/duke-logo.svg"
+        alt="Duke logo"
+        width={240}
+        height={64}
+        className="object-contain h-full block"
+        priority
+      />
+    </div>
+  </div>
+
+
       <p className="text-sm mt-2">
         &copy; {new Date().getFullYear()} Duke of Leather. All rights reserved.
       </p>

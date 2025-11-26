@@ -1,7 +1,43 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+// next.config.js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    // Enable cross-origin isolation if needed
+  },
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: 'http://leather.local', // Your WordPress domain
+          },
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'true',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'X-Requested-With, Content-Type, Accept, Origin, Authorization, X-WC-Store-API-Nonce, Cart-Token, cart-hash, nonce',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+        ],
+      },
+    ];
+  },
+  // Important: If your Next.js app runs on a different port, you need to proxy API calls
+  async rewrites() {
+    return [
+      {
+        source: '/wp-json/:path*',
+        destination: 'http://leather.local/wp-json/:path*', // Your WordPress API
+      },
+    ];
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
