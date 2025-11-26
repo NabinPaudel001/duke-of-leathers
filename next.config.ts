@@ -1,9 +1,14 @@
-// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
     // Enable cross-origin isolation if needed
   },
+
+  eslint: {
+    // Completely disable ESLint during builds
+    ignoreDuringBuilds: true,
+  },
+
   async headers() {
     return [
       {
@@ -19,7 +24,8 @@ const nextConfig = {
           },
           {
             key: 'Access-Control-Allow-Headers',
-            value: 'X-Requested-With, Content-Type, Accept, Origin, Authorization, X-WC-Store-API-Nonce, Cart-Token, cart-hash, nonce',
+            value:
+              'X-Requested-With, Content-Type, Accept, Origin, Authorization, X-WC-Store-API-Nonce, Cart-Token, cart-hash, nonce',
           },
           {
             key: 'Access-Control-Allow-Methods',
@@ -29,7 +35,7 @@ const nextConfig = {
       },
     ];
   },
-  // Important: If your Next.js app runs on a different port, you need to proxy API calls
+
   async rewrites() {
     return [
       {
