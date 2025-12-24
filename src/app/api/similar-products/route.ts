@@ -13,7 +13,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    const baseURL = "https://dukeofleathers.no/wp/wp-json/wc/v3/products";
+    const baseURL = "https://wp.dukeofleathers.no/wp-json/wc/v3/products";
 
     const authString = Buffer.from(
       `${process.env.consumer_key}:${process.env.consumer_secret}`

@@ -19,7 +19,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'https://dukeofleathers.no/wp/', // Your WordPress domain
+            value: 'https://wp.dukeofleathers.no/', // Your WordPress domain
           },
           {
             key: 'Access-Control-Allow-Credentials',
@@ -43,7 +43,7 @@ const nextConfig = {
     return [
       {
         source: '/wp-json/:path*',
-        destination: 'https://dukeofleathers.no/wp/wp-json/:path*', // Your WordPress API
+        destination: 'https://wp.dukeofleathers.no/wp-json/:path*', // Your WordPress API
       },
     ];
   },

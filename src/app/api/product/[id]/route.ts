@@ -15,7 +15,7 @@ export async function GET(
         : undefined;
 
     const response = await axios.get(
-      `https://dukeofleathers.no/wp/wp-json/wc/v3/products/${id}`,
+      `https://wp.dukeofleathers.no/wp-json/wc/v3/products/${id}`,
       {
         auth: {
           username: process.env.consumer_key!,

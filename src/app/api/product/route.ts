@@ -1,6 +1,6 @@
 export async function GET() {
   try {
-    const url = "https://dukeofleathers.no/wp/wp-json/wc/v3/products";
+    const url = "https://wp.dukeofleathers.no/wp-json/wc/v3/products";
 
     const authString =
       Buffer.from(

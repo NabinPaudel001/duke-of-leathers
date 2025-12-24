@@ -1,7 +1,7 @@
 // app/api/cart/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
-const WOOCOMMERCE_BASE_URL = "https://dukeofleathers.no/wp/";
+const WOOCOMMERCE_BASE_URL = "https://wp.dukeofleathers.no/";
 
 // Helper to proxy requests to WooCommerce
 async function proxyToWooCommerce(
