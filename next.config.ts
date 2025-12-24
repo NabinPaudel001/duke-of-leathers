@@ -8,7 +8,10 @@ const nextConfig = {
     // Completely disable ESLint during builds
     ignoreDuringBuilds: true,
   },
-
+  output: 'export',
+  images: {
+    unoptimized: true
+  },
   async headers() {
     return [
       {
@@ -16,7 +19,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'https://leather.ct.ws/', // Your WordPress domain
+            value: 'https://dukeofleathers.no/wp/', // Your WordPress domain
           },
           {
             key: 'Access-Control-Allow-Credentials',
@@ -40,10 +43,10 @@ const nextConfig = {
     return [
       {
         source: '/wp-json/:path*',
-        destination: 'https://leather.ct.ws/wp-json/:path*', // Your WordPress API
+        destination: 'https://dukeofleathers.no/wp/wp-json/:path*', // Your WordPress API
       },
     ];
   },
 };
-
+      
 module.exports = nextConfig;

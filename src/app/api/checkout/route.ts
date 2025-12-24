@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BASE = "https://leather.ct.ws";
+const BASE = "https://dukeofleathers.no/wp/";
 const CHECKOUT = "/wp-json/wc/store/v1/checkout";
 const CART = "/wp-json/wc/store/v1/cart";
 

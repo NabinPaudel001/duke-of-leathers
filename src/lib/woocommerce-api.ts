@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Create axios instance with proper defaults
 const woocommerceAPI = axios.create({
-  baseURL: 'https://leather.ct.ws/', // Your WordPress base URL
+  baseURL: 'https://dukeofleathers.no/wp/', // Your WordPress base URL
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
