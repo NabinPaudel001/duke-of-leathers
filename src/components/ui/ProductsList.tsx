@@ -18,11 +18,15 @@ export default function ProductsList() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
+  console.log("ProductsList mounted");
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get<Product[]>("/api/product");
         setProducts(response.data);
+
+        console.log("Fetched products:", response.data);
       } catch (err: any) {
         console.error(err);
         setError("Failed to load products");

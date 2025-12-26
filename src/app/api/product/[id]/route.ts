@@ -7,6 +7,7 @@ export async function GET(
   context: { params: Promise<{ id: string }> }
 ) {
   const { id } = await context.params;
+  console.log("Received request for product id:", id);
 
   try {
     const agent =

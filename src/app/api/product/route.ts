@@ -7,6 +7,8 @@ export async function GET() {
         `${process.env.consumer_key}:${process.env.consumer_secret}`
       ).toString("base64");
 
+console.log("authString:", authString);
+
     const response = await fetch(url, {
       headers: {
         Authorization: `Basic ${authString}`,

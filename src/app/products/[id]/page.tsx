@@ -41,6 +41,7 @@ export default function ProductPage() {
 
     const fetchProduct = async () => {
       setLoading(true);
+      console.log("Fetching product with id:", id);
       try {
         const res = await axios.get<Product>(`/api/product/${id}`);
         setProduct(res.data);

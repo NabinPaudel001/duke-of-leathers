@@ -84,6 +84,8 @@ export async function POST(req: NextRequest) {
     const cookies = req.headers.get("cookie") || "";
     const body = await req.json();
 
+    console.log("I am inside the POST /api/cart endpoint");
+
     console.log("Incoming cookies:", cookies);
     console.log("Request body:", body);
 
@@ -114,6 +116,8 @@ export async function POST(req: NextRequest) {
         quantity: body.quantity ?? 1,
       }),
     });
+
+    console.log("WooCommerce ADD response status:", wcRes);
 
     console.log("WooCommerce ADD response status:", wcRes.status);
     console.log("WooCommerce ADD response headers:", Object.fromEntries(wcRes.headers.entries()));

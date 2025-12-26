@@ -8,10 +8,8 @@ const nextConfig = {
     // Completely disable ESLint during builds
     ignoreDuringBuilds: true,
   },
-  output: 'export',
-  images: {
-    unoptimized: true
-  },
+  // output: 'export',
+
   async headers() {
     return [
       {

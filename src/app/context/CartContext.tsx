@@ -147,6 +147,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const addToCart = async (productId: number, quantity = 1) => {
     try {
       console.log("=== Adding to Cart ===", { productId, quantity });
+      console.log("I am inside the cart context")
       
       setLoading(true);
       const res = await axios.post(
@@ -160,6 +161,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           withCredentials: true,
         }
       );
+
+      console.log("Add to cart responseeee:", res);
       await refreshCart();
     } catch (err) {
       console.error("Add to cart failed:", err);
