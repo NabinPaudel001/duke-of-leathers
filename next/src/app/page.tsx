@@ -186,7 +186,7 @@ export default function ProductPage() {
 </section>
 
       {/* PRODUCT SECTIONS */}
-      <div className="relative z-10 py-0">
+      <div className="relative z-10 py-24 bg-white">
           
               <ProductsList />
   
@@ -294,48 +294,82 @@ export default function ProductPage() {
         <Contact/>
       </div>
 
-   
- {/* FOOTER */}
-      <footer className="bg-black text-white py-10 relative">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-10 text-center md:text-left">
+    {/* FOOTER */}
+<footer className="bg-black text-white py-10">
+  <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-center gap-10 text-center md:text-left">
+    {/* Left side */}
+   <div className="flex flex-col items-center md:items-start">
+  <div className="flex items-center mb-4 gap-0">
+    {/* Circular Image */}
+    <div className="rounded-full overflow-hidden">
+      <Image
+        src="/logo.svg"
+        alt="Bull logo"
+        width={60}
+        height={64}
+        className="object-cover w-full h-full block"
+        priority
+      />
+    </div>
 
-          {/* Left */}
-          <div className="flex flex-col items-center md:items-start">
-            <div className="flex items-center mb-4 gap-0">
-              <Image src="/logo.svg" alt="Bull logo" width={60} height={64} priority />
-              <Image src="/duke-logo.svg" alt="Duke logo" width={240} height={64} priority />
-            </div>
+    {/* Rectangular Image */}
+    <div className="">
+      <Image
+        src="/duke-logo.svg"
+        alt="Duke logo"
+        width={240}
+        height={64}
+        className="object-contain h-full block"
+        priority
+      />
+    </div>
+  </div>
 
-            <p className="text-sm">
-              &copy; {new Date().getFullYear()} Duke of Leather. All rights reserved.
-            </p>
 
-            {/* TERMS BUTTON */}
-            <button className="text-sm mt-2 underline hover:text-amber-400 transition"
-            >
-              <a href="/terms" target="_blank">Terms & Conditions</a>
-            </button>
-          </div>
+      <p className="text-sm mt-2">
+        &copy; {new Date().getFullYear()} Duke of Leather. All rights reserved.
+      </p>
+    </div>
 
-          {/* Right */}
-          <div className="flex flex-col items-center md:items-end gap-4">
-            <div className="text-sm">
-              <p>Email: <a href="mailto:leathers.duke@gmail.com">leathers.duke@gmail.com</a></p>
-              <p>Phone: <a href="tel:+4745423709">+47 45423709</a></p>
-              <p>
-                Address: Fredrik Borgens veg 31,<br />
-                <span className="md:ml-[64px]">2040 Kløfta Norway</span>
-              </p>
-            </div>
+    {/* Right side */}
+    <div className="flex flex-col items-center md:items-end gap-4">
+      <div className="text-sm text-center md:text-left">
+        <p>
+          Email:{" "}
+          <a href="mailto:leathers.duke@gmail.com">leathers.duke@gmail.com</a>
+        </p>
+        <p>
+          Phone: <a href="tel:+47-45423709">+47 45423709</a>
+        </p>
+        <p>
+          Address: Fredrik Borgens veg 31,<br />
+          <span className="ml-[64px] md:ml-[64px] ml-0">2040 Kløfta Norway</span>
+        </p>
+      </div>
 
-            <div className="flex gap-4">
-              <a href="https://www.facebook.com/share/1CiUKWfDH9/"><FaFacebook size={20} /></a>
-              <a href="https://www.instagram.com/dukeofleathers"><FaInstagram size={20} /></a>
-              <a href="https://www.tiktok.com/@duke.of.leathers"><FaTiktok size={20} /></a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <div className="flex gap-4 mt-2 justify-center md:self-center">
+        <a
+          href="https://www.facebook.com/share/1CiUKWfDH9/"
+          className="hover:text-amber-400 transition"
+        >
+          <FaFacebook size={20} />
+        </a>
+        <a
+          href="https://www.instagram.com/dukeofleathers"
+          className="hover:text-amber-400 transition"
+        >
+          <FaInstagram size={20} />
+        </a>
+        <a
+          href="https://www.tiktok.com/@duke.of.leathers?_t=ZN-90O6D1gyAKs&_r=1"
+          className="hover:text-amber-400 transition"
+        >
+          <FaTiktok size={20} />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
 
 
       {/* LIGHTBOX */}

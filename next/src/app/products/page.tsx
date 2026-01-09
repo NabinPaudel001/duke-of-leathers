@@ -81,7 +81,54 @@ export default function ProductsList() {
     );
 
   return (
-    <section className="min-h-screen pb-10 bg-gray-50">
+    <section className="min-h-screen py-0 bg-gray-50">
+        {/* Header */}
+
+{/* Sticky Header */}
+<header className={`sticky top-0 z-50 bg-white bg-[url('/images/s.webp')] bg-cover bg-center bg-no-repeat shadow-md py-4 px-6 flex justify-between items-center transition-all duration-300
+      ${scrolled ? "max-w-7xl mx-auto" : "w-full"}`}>
+
+  <div
+    className="text-2xl font-bold cursor-pointer flex items-center justify-center"
+    onClick={() => router.push("/")}
+  >
+    <Image src={"/logo.svg"} alt="Bull logo" width={30} height={30} className="object-contain" />
+
+    <Image
+      src="/duke-logo.svg"
+      alt="Bull logo"
+      width={80}
+      height={42}
+      className="object-contain mt-1"
+      priority
+    />
+  </div>
+
+  {/* Cart Icon */}
+  <div className="relative cursor-pointer" onClick={() => router.push("/cart")}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-6 text-white"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m12-9l2 9m-6-9v9"
+      />
+    </svg>
+
+    {totalItems > 0 && (
+      <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+        {totalItems}
+      </span>
+    )}
+  </div>
+</header>
+
       <div className="max-w-6xl mx-auto px-4 pt-10">
       
 

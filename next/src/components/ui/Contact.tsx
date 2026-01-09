@@ -31,7 +31,7 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contact" className="max-w-4xl mx-auto mb-10">
+    <section id="contact" className="max-w-4xl mx-auto mb-0">
       <div className="mx-4 bg-white p-10 rounded-3xl shadow-lg border border-gray-200">
         <h2 className="text-3xl font-bold text-gray-900 mb-6">Contact Us</h2>
         <p className="text-gray-600 mb-6">
